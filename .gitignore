@@ -1,0 +1,11 @@
+# Machine-local Claude Code state and settings — never tracked.
+.claude/settings.local.json
+.claude/*.local.json
+
+# home-manager displaces pre-existing real files with this suffix.
+*.hm-bak
+
+result
+result-*
+.direnv/
+.DS_Store
