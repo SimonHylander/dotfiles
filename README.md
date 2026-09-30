@@ -112,6 +112,7 @@ scripts/
   exe-setup.sh            /exe.dev/setup stub
   sync-skills.sh          pull upstream skills, link everything
   link-skills.sh          link this repo's skills into both harness dirs
+  link-agents-md.sh       link CLAUDE.md / AGENTS.md into harness dirs without home-manager
 CLAUDE.md  AGENTS.md      agent guidance, single source each
 .claude/                  settings.json
 .agents/agents/           subagent definitions, linked into both harness dirs
