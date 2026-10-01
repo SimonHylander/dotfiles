@@ -1,0 +1,3 @@
+[submodule "proposales"]
+	path = proposales
+	url = git@github.com:SimonHylander/dotfiles-proposales.git
