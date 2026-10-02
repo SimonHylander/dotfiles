@@ -85,10 +85,8 @@ that repo's own `scripts/link-skills.sh`, then runs ours last so this repo wins 
 collision. Network failures warn rather than failing the switch.
 
 Upstream's linker skips its `misc/` bucket, so `sync-skills.sh` links those skills itself.
-`edit-article` and `obsidian-vault` were in upstream's `personal/` bucket until it was deleted
-(mattpocock/skills@c66bdee), so they are vendored in `.agents/skills/`. The vault path in
-`obsidian-vault` points at `~/Documents/Obsidian Vault`. A final pass deletes broken symlinks
-in both skill directories, so skills removed upstream don't linger.
+A final pass deletes broken symlinks in both skill directories, so skills removed upstream or
+here don't linger.
 
 ## Machine-local settings
 
