@@ -48,7 +48,9 @@ Replicate the `##### Positive Patterns` as behavioral references. Avoid the `###
 - Tests are good! Endless smoke tests, "regression tests" for feature deletions, etc, much less good. Tests should be focused, not slop.
 - Comments are a great way to clarify functionality and how code is used. Don't comment every line, but feel free to describe (concicely) how functions are used above function definitions, classes, etc.
 - Keep comments up to date! When making changes, it's important to keep things in sync.
-- When doing large work or refactors that introduces larger change diffs, prefer to aim for stacked PR's so that it becomes easier to review.
+- When doing large work or refactors that introduces larger change diffs, prefer to aim for GH stacked PR: https://docs.github.com/en/pull-requests/get-started/stacked-prs-quickstart.
+- Dont ask me wether to push or create a PR after we have implemented something, just do it yourself.
+- Instead of giving me instructions on how to probe something in a system to gain more information, do it yourself if you have the tools.
 
 ## Coding preferences (Typescript)
 - *any* is the enemy. Inferred types are our friend. Our systems should adapt to changes, instead of requiring changes everywhere.
