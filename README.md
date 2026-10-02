@@ -84,6 +84,10 @@ are untouched.
 that repo's own `scripts/link-skills.sh`, then runs ours last so this repo wins any future name
 collision. Network failures warn rather than failing the switch.
 
+Upstream's linker skips its `misc/` bucket, so `sync-skills.sh` links those skills itself.
+A final pass deletes broken symlinks in both skill directories, so skills removed upstream or
+here don't linger.
+
 ## Machine-local settings
 
 `.claude/settings.json` here holds only what is portable. Anything machine-specific — the
