@@ -60,7 +60,7 @@ never a whole directory:
 ```text
 ~/CLAUDE.md                  -> <repo>/CLAUDE.md
 ~/AGENTS.md                  -> <repo>/AGENTS.md
-~/.claude/CLAUDE.md          -> <repo>/CLAUDE.md
+~/.claude/CLAUDE.md          -> <repo>/AGENTS.md
 ~/.claude/settings.json      -> <repo>/.claude/settings.json
 ~/.agents/AGENTS.md          -> <repo>/AGENTS.md
 ~/.codex/AGENTS.md           -> <repo>/AGENTS.md

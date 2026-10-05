@@ -20,7 +20,7 @@ in
     "CLAUDE.md".source = link "CLAUDE.md";
     "AGENTS.md".source = link "AGENTS.md";
 
-    ".claude/CLAUDE.md".source = link "CLAUDE.md";
+    ".claude/CLAUDE.md".source = link "AGENTS.md";
     ".claude/settings.json".source = link ".claude/settings.json";
 
     # Unlike skills/, nothing writes into agents/ and no external script claims
