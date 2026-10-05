@@ -60,6 +60,6 @@ Replicate the `##### Positive Patterns` as behavioral references. Avoid the `###
 
 ## AI Model Preferences
 - Never use Haiku.
-- Mechanics: gpt-5.6 is reachable through the the "claudex" alias.
-- Always use sonnet subagents when scraping and exploring code.
+- Mechanics: gpt-6.1-sol is reachable through the the "claudex" alias.
+- Always use sonnet-5.5 subagents when scraping and exploring code and files.
 
