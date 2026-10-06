@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Symlinks this repo's agent guidance files into each harness's global location:
-#   ~/.claude/CLAUDE.md  -> <repo>/CLAUDE.md   (Claude Code)
+#   ~/.claude/CLAUDE.md  -> <repo>/AGENTS.md   (Claude Code)
 #   ~/.codex/AGENTS.md   -> <repo>/AGENTS.md   (Codex)
 #   ~/.agents/AGENTS.md  -> <repo>/AGENTS.md   (Agent Skills-compatible harnesses)
 #
@@ -13,7 +13,7 @@ set -euo pipefail
 REPO="${DOTFILES_ROOT:-$(cd "$(dirname "$0")/.." && pwd)}"
 
 LINKS=(
-  "CLAUDE.md:$HOME/.claude/CLAUDE.md"
+  "AGENTS.md:$HOME/.claude/CLAUDE.md"
   "AGENTS.md:$HOME/.codex/AGENTS.md"
   "AGENTS.md:$HOME/.agents/AGENTS.md"
 )
