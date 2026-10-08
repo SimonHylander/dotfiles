@@ -94,8 +94,8 @@ VM error.
 
 Shell configuration is deliberately unmanaged: `~/.zshrc` contains live credentials and would
 need `sops-nix`/`agenix` or an untracked `~/.zshrc.local` before it could be committed. One
-consequence — direnv is installed but its shell hook is not, so add
-`eval "$(direnv hook zsh)"` to `~/.zshrc` yourself if you want it.
+consequence — direnv comes from `home/packages.nix`, but its shell hook is appended to
+`~/.zshrc` / `~/.bashrc` by `scripts/bootstrap.sh` (idempotent), not by home-manager.
 
 ## Layout
 

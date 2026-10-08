@@ -185,6 +185,22 @@ ensure_profile_on_path() {
   warn "open a new shell, or run: $line"
 }
 
+# Shell config is unmanaged (~/.zshrc holds credentials), so the direnv hook is
+# appended rather than linked. Guarded so it is a no-op until direnv exists.
+ensure_direnv_hook() {
+  local shell rc line
+  for shell in zsh bash; do
+    command -v "$shell" >/dev/null 2>&1 || continue
+    rc="$HOME/.${shell}rc"
+    # shellcheck disable=SC2016  # written verbatim into the rc file
+    line="command -v direnv >/dev/null && eval \"\$(direnv hook $shell)\""
+    if ! grep -qsF "direnv hook $shell" "$rc"; then
+      log "adding direnv hook to $rc"
+      printf '\n%s\n' "$line" >>"$rc"
+    fi
+  done
+}
+
 main() {
   local root="${DOTFILES_ROOT:-$HOME/development/dotfiles}"
 
@@ -195,6 +211,7 @@ main() {
   clone_dotfiles "$root"
   apply_home_manager "$root"
   ensure_profile_on_path
+  ensure_direnv_hook
 
   log "done — $root is live; edits to CLAUDE.md and skills apply immediately"
 }

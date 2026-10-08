@@ -18,8 +18,8 @@
   ];
 
   # Worth the module: it wires nix-direnv's caching for you.
-  # The shell hook is not installed, because zsh isn't managed here — add
-  # `eval "$(direnv hook zsh)"` to ~/.zshrc yourself.
+  # The shell hook is not installed here, because zsh isn't managed —
+  # scripts/bootstrap.sh appends it to ~/.zshrc / ~/.bashrc.
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
