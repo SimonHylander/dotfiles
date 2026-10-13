@@ -112,6 +112,7 @@ You are absolutely right that redis could help. The real tension is larger: this
 - When doing large work or refactors that introduces larger change diffs, prefer to aim for GH stacked PR: https://docs.github.com/en/pull-requests/get-started/stacked-prs-quickstart.
 - Dont ask me wether to push or create a PR after we have implemented something, just do it yourself.
 - Instead of giving me instructions on how to probe something in a system to gain more information, do it yourself if you have the tools.
+- Use the technical-writing skill whenever you are writing docs or comments.
 
 ## Coding preferences (Typescript)
 - *any* is the enemy. Inferred types are our friend. Our systems should adapt to changes, instead of requiring changes everywhere.
@@ -123,4 +124,7 @@ You are absolutely right that redis could help. The real tension is larger: this
 - Never use Haiku.
 - Mechanics: gpt-6.1-sol is reachable through the the "claudex" alias.
 - Always use sonnet-5.5 subagents when scraping and exploring code and files.
+
+Never leave watermarks like "Generated with <X>"
+
 
