@@ -1,8 +1,7 @@
 # Dotfiles
 
 Agent configuration and a lean base toolchain, managed with [home-manager](https://github.com/nix-community/home-manager).
-One flake, two targets: macOS (`aarch64-darwin`) and Linux — the Linux target being
-[exe.dev](https://exe.dev) VMs, which are Ubuntu containers rather than NixOS.
+One flake, one target: macOS (`aarch64-darwin`).
 
 ## First install
 
@@ -40,8 +39,7 @@ nix run .#home-manager -- switch \
   -b hm-bak
 ```
 
-`nix flake check` builds the configuration for the current system first, so evaluation errors
-surface before a switch. Add `--all-systems --no-build` to also evaluate the Linux targets.
+`nix flake check` builds the configuration first, so evaluation errors surface before a switch.
 
 `nix run .#home-manager` uses the CLI pinned in this `flake.lock`, so it can never drift from the
 modules it is applying. **`-b hm-bak` is not optional**: standalone home-manager has no
