@@ -19,7 +19,7 @@
 
   outputs = { self, nixpkgs, home-manager, mattpocock-skills, ... }:
     let
-      supportedSystems = [ "aarch64-darwin" "x86_64-linux" "aarch64-linux" ];
+      supportedSystems = [ "aarch64-darwin" ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
 
       # Narrow rather than blanket allowUnfree: claude-code is the only
@@ -58,20 +58,6 @@
           system = "aarch64-darwin";
           username = "simonhylander";
           homeDirectory = "/Users/simonhylander";
-        };
-
-        # exe.dev VMs log in as `exedev`. The docs don't pin an architecture,
-        # so both are generated.
-        "exedev@x86_64-linux" = mkHome {
-          system = "x86_64-linux";
-          username = "exedev";
-          homeDirectory = "/home/exedev";
-        };
-
-        "exedev@aarch64-linux" = mkHome {
-          system = "aarch64-linux";
-          username = "exedev";
-          homeDirectory = "/home/exedev";
         };
       };
     };
