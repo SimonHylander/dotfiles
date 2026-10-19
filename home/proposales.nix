@@ -11,15 +11,11 @@ let
   };
 
   skills = "${development}/dotfiles-proposales/skills";
-  brunoProbe = config.lib.file.mkOutOfStoreSymlink "${development}/bruno-probe/claude/bruno-probe.md";
+  brunoProbeCommand = "${development}/bruno-probe/claude/bruno-probe.md";
 in
 {
-  # Upstream ships a Claude command file, not a skill directory.
-  home.file.".claude/skills/bruno-probe/SKILL.md".source = brunoProbe;
-  home.file.".agents/skills/bruno-probe/SKILL.md".source = brunoProbe;
-
-  # dotfiles-proposales skills are linked at activation, not as home.file
-  # entries: listing them from Nix would fetch the private repo on every
+  # Everything happens at activation, not as home.file entries: listing the
+  # dotfiles-proposales skills from Nix would fetch the private repo on every
   # evaluation. Network failures warn instead of failing the switch.
   home.activation.proposalesSkills = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
     export PATH="${lib.makeBinPath [ pkgs.git ]}:$PATH"
@@ -35,6 +31,14 @@ in
     for dest in "$HOME/.claude/skills" "$HOME/.agents/skills"; do
       run mkdir -p "$dest"
 
+      # Upstream ships a Claude command file, not a skill directory. It is
+      # copied, not linked, because Codex skips a SKILL.md that is a symlink.
+      if [ -f "${brunoProbeCommand}" ]; then
+        [ -L "$dest/bruno-probe" ] && run rm "$dest/bruno-probe"
+        run mkdir -p "$dest/bruno-probe"
+        run install -m 644 "${brunoProbeCommand}" "$dest/bruno-probe/SKILL.md"
+      fi
+
       # Drop links to skills removed from dotfiles-proposales.
       for link in "$dest"/*; do
         [ -L "$link" ] && [ ! -e "$link" ] || continue
@@ -46,7 +50,7 @@ in
       for skill in "${skills}"/*/; do
         [ -f "$skill/SKILL.md" ] || continue
         target="$dest/$(basename "$skill")"
-        # A real directory belongs to home-manager or another installer.
+        # A real directory belongs to another installer, or is bruno-probe.
         if [ -e "$target" ] && [ ! -L "$target" ]; then
           warnEcho "skipping $(basename "$skill"): $target is not a symlink"
           continue

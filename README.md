@@ -97,8 +97,8 @@ the next switch.
 to this one, `~/development/dotfiles-proposales` and
 [`~/development/bruno-probe`](https://github.com/proposales/bruno-probe), and links every
 `dotfiles-proposales/skills/<skill>` at activation. Listing those skills from Nix would fetch the
-private repo on every evaluation. `bruno-probe/SKILL.md` links to the upstream
-`claude/bruno-probe.md`. Set `BRUNO_COLLECTIONS` to the proposales repo's `bruno-collections/`
+private repo on every evaluation. The upstream `claude/bruno-probe.md` is copied to
+`bruno-probe/SKILL.md` on each switch, because Codex skips a `SKILL.md` that is a symlink. Set `BRUNO_COLLECTIONS` to the proposales repo's `bruno-collections/`
 folder, because the checkout isn't at the runner's default path.
 
 ## Machine-local settings
