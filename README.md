@@ -93,6 +93,14 @@ are untouched.
 This repo wins name collisions. home-manager removes links to skills that no longer exist on
 the next switch.
 
+**Proposales skills (macOS only).** `home/proposales.nix` clones or pulls two private repos next
+to this one, `~/development/dotfiles-proposales` and
+[`~/development/bruno-probe`](https://github.com/proposales/bruno-probe), and links every
+`dotfiles-proposales/skills/<skill>` at activation. Listing those skills from Nix would fetch the
+private repo on every evaluation. The upstream `claude/bruno-probe.md` is copied to
+`bruno-probe/SKILL.md` on each switch, because Codex skips a `SKILL.md` that is a symlink. Set `BRUNO_COLLECTIONS` to the proposales repo's `bruno-collections/`
+folder, because the checkout isn't at the runner's default path.
+
 ## Machine-local settings
 
 `.claude/settings.json` here holds only what is portable. Anything machine-specific — the
@@ -116,6 +124,7 @@ home/
   skills.nix              per-skill links into ~/.claude/skills and ~/.agents/skills
   packages.nix            cross-platform toolchain
   darwin.nix              macOS-only (deliberately minimal — Homebrew owns the rest)
+  proposales.nix          macOS-only: private sibling checkouts + their skill links
   linux.nix               Linux-only (node, pnpm, neovim, claude-code)
 scripts/
   bootstrap.sh            first install: nix -> clone -> switch
