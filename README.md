@@ -93,13 +93,13 @@ are untouched.
 This repo wins name collisions. home-manager removes links to skills that no longer exist on
 the next switch.
 
-**Proposales skills (macOS only).** The `proposales/` submodule and
-[proposales/bruno-probe](https://github.com/proposales/bruno-probe) are private, so
-`home/proposales.nix` handles them in an activation step instead of `home.file`. Listing the
-submodule's skills from Nix would fetch it over SSH on every evaluation. The step clones or pulls
-bruno-probe into `~/development/bruno-probe` and links every `proposales/skills/<skill>`. The
-`bruno-probe` skill is a symlink into that checkout. Set `BRUNO_COLLECTIONS` to the proposales
-repo's `bruno-collections/` folder, because the checkout isn't at the runner's default path.
+**Proposales skills (macOS only).** `home/proposales.nix` clones or pulls two private repos next
+to this one, `~/development/dotfiles-proposales` and
+[`~/development/bruno-probe`](https://github.com/proposales/bruno-probe), and links every
+`dotfiles-proposales/skills/<skill>` at activation. Listing those skills from Nix would fetch the
+private repo on every evaluation. `bruno-probe/SKILL.md` links to the upstream
+`claude/bruno-probe.md`. Set `BRUNO_COLLECTIONS` to the proposales repo's `bruno-collections/`
+folder, because the checkout isn't at the runner's default path.
 
 ## Machine-local settings
 
@@ -124,7 +124,7 @@ home/
   skills.nix              per-skill links into ~/.claude/skills and ~/.agents/skills
   packages.nix            cross-platform toolchain
   darwin.nix              macOS-only (deliberately minimal — Homebrew owns the rest)
-  proposales.nix          macOS-only: bruno-probe checkout + proposales skill links
+  proposales.nix          macOS-only: private sibling checkouts + their skill links
   linux.nix               Linux-only (node, pnpm, neovim, claude-code)
 scripts/
   bootstrap.sh            first install: nix -> clone -> switch
@@ -133,5 +133,4 @@ CLAUDE.md  AGENTS.md      agent guidance, single source each
 .claude/                  settings.json
 .agents/agents/           subagent definitions, linked into both harness dirs
 .agents/skills/           this repo's own skills
-proposales/               private submodule (SimonHylander/dotfiles-proposales), skills/ only
 ```

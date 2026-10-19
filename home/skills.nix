@@ -44,7 +44,8 @@ in
       for link in "$dest"/*; do
         [ -L "$link" ] || continue
         case "$(readlink "$link")" in
-          "${repo}/.agents/skills/"* | "${config.home.homeDirectory}/development/mattpocock-skills/"*)
+          "${repo}/.agents/skills/"* | "${repo}/proposales/skills/"* | \
+          "${config.home.homeDirectory}/development/mattpocock-skills/"*)
             run rm "$link"
             ;;
         esac
