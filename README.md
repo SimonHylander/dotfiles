@@ -47,14 +47,14 @@ flag the first switch aborts on any managed path that already exists as a real f
 
 Editing `CLAUDE.md`, `AGENTS.md`, `.claude/settings.json` or any skill takes effect
 **immediately** — the links point at this checkout, not at the Nix store. A `switch` is only
-needed after changing something under `home/`, and `./scripts/sync-skills.sh` re-links skills
-and pulls the upstream skills repo without a full switch.
+needed after changing something under `home/`, adding a skill, or updating
+mattpocock/skills with `nix flake update mattpocock-skills`.
 
 ## What gets linked
 
 `~/.claude` and `~/.agents` stay real directories — Claude Code writes runtime state
-(`sessions/`, `projects/`, `history.jsonl`) into the same tree it reads config from, and the
-skill directories are symlink farms maintained by scripts. So individual leaves are managed,
+(`sessions/`, `projects/`, `history.jsonl`) into the same tree it reads config from, and other
+installers also write into the skill directories. So individual leaves are managed,
 never a whole directory:
 
 ```text
@@ -66,8 +66,8 @@ never a whole directory:
 ~/.codex/AGENTS.md           -> <repo>/AGENTS.md
 ~/.claude/agents             -> <repo>/.agents/agents
 ~/.agents/agents             -> <repo>/.agents/agents
-~/.claude/skills/<skill>     -> <repo>/.agents/skills/<skill>
-~/.agents/skills/<skill>     -> <repo>/.agents/skills/<skill>
+~/.claude/skills/<skill>     -> <repo>/.agents/skills/<skill>  or  <store>/mattpocock-skills/...
+~/.agents/skills/<skill>     -> <repo>/.agents/skills/<skill>  or  <store>/mattpocock-skills/...
 ```
 
 Pre-existing real files are moved aside with a `.hm-bak` suffix on first switch, not
@@ -79,14 +79,16 @@ are untouched.
 
 ### Skills
 
-`scripts/sync-skills.sh` runs on every activation. It clones or pulls
-[mattpocock/skills](https://github.com/mattpocock/skills) into `~/development/mattpocock-skills` and runs
-that repo's own `scripts/link-skills.sh`, then runs ours last so this repo wins any future name
-collision. Network failures warn rather than failing the switch.
+`home/skills.nix` gives every skill its own link in both skill directories:
 
-Upstream's linker skips its `misc/` bucket, so `sync-skills.sh` links those skills itself.
-A final pass deletes broken symlinks in both skill directories, so skills removed upstream or
-here don't linger.
+- **This repo's skills** link to the checkout, so edits are live. They are listed from the flake
+  source, so a new skill shows up after `git add` and a switch.
+- **[mattpocock/skills](https://github.com/mattpocock/skills)** is a flake input pinned in
+  `flake.lock`, linked from the store. Every bucket except `deprecated/` is linked. Update with
+  `nix flake update mattpocock-skills`.
+
+This repo wins name collisions. home-manager removes links to skills that no longer exist on
+the next switch.
 
 ## Machine-local settings
 
@@ -107,16 +109,14 @@ consequence — direnv comes from `home/packages.nix`, but its shell hook is app
 flake.nix                 nixpkgs + home-manager, one homeConfiguration per target
 home/
   default.nix             stateVersion, backup policy, platform imports
-  agents.nix              CLAUDE.md / AGENTS.md / .claude leaves + skills activation
+  agents.nix              CLAUDE.md / AGENTS.md / .claude leaves
+  skills.nix              per-skill links into ~/.claude/skills and ~/.agents/skills
   packages.nix            cross-platform toolchain
   darwin.nix              macOS-only (deliberately minimal — Homebrew owns the rest)
   linux.nix               Linux-only (node, pnpm, neovim, claude-code)
 scripts/
   bootstrap.sh            first install: nix -> clone -> switch
   exe-setup.sh            /exe.dev/setup stub
-  sync-skills.sh          pull upstream skills, link everything
-  link-skills.sh          link this repo's skills into both harness dirs
-  link-agents-md.sh       link CLAUDE.md / AGENTS.md into harness dirs without home-manager
 CLAUDE.md  AGENTS.md      agent guidance, single source each
 .claude/                  settings.json
 .agents/agents/           subagent definitions, linked into both harness dirs

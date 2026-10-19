@@ -8,9 +8,16 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Linked straight from the store by home/skills.nix. Bump with
+    # `nix flake update mattpocock-skills`.
+    mattpocock-skills = {
+      url = "github:mattpocock/skills";
+      flake = false;
+    };
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs = { nixpkgs, home-manager, mattpocock-skills, ... }:
     let
       supportedSystems = [ "aarch64-darwin" "x86_64-linux" "aarch64-linux" ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
@@ -26,7 +33,7 @@
             config.allowUnfreePredicate = pkg:
               builtins.elem (nixpkgs.lib.getName pkg) unfreeAllowed;
           };
-          extraSpecialArgs = { inherit system username homeDirectory; };
+          extraSpecialArgs = { inherit system username homeDirectory mattpocock-skills; };
           modules = [ ./home ];
         };
     in
