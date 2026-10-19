@@ -40,6 +40,9 @@ nix run .#home-manager -- switch \
   -b hm-bak
 ```
 
+`nix flake check` builds the configuration for the current system first, so evaluation errors
+surface before a switch. Add `--all-systems --no-build` to also evaluate the Linux targets.
+
 `nix run .#home-manager` uses the CLI pinned in this `flake.lock`, so it can never drift from the
 modules it is applying. **`-b hm-bak` is not optional**: standalone home-manager has no
 `home.backupFileExtension` option (that belongs to the nix-darwin/NixOS module), so without the
