@@ -19,6 +19,8 @@ in
   # evaluation. Network failures warn instead of failing the switch.
   home.activation.proposalesSkills = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
     export PATH="${lib.makeBinPath [ pkgs.git ]}:$PATH"
+    # Activation's PATH has no ssh. macOS's own reads keys from the Keychain.
+    export GIT_SSH_COMMAND=/usr/bin/ssh
 
     ${lib.concatStrings (lib.mapAttrsToList (name: url: ''
       if [ -d "${development}/${name}/.git" ]; then
