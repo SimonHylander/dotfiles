@@ -8,9 +8,16 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Linked straight from the store by home/skills.nix. Bump with
+    # `nix flake update mattpocock-skills`.
+    mattpocock-skills = {
+      url = "github:mattpocock/skills";
+      flake = false;
+    };
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs = { self, nixpkgs, home-manager, mattpocock-skills, ... }:
     let
       supportedSystems = [ "aarch64-darwin" "x86_64-linux" "aarch64-linux" ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
@@ -26,7 +33,7 @@
             config.allowUnfreePredicate = pkg:
               builtins.elem (nixpkgs.lib.getName pkg) unfreeAllowed;
           };
-          extraSpecialArgs = { inherit system username homeDirectory; };
+          extraSpecialArgs = { inherit system username homeDirectory mattpocock-skills; };
           modules = [ ./home ];
         };
     in
@@ -38,6 +45,13 @@
         home-manager = home-manager.packages.${system}.default;
         default = home-manager.packages.${system}.default;
       });
+
+      # `nix flake check` builds every home configuration for the current
+      # system, so an evaluation error shows up before a switch.
+      checks = forAllSystems (system:
+        nixpkgs.lib.mapAttrs (_: config: config.activationPackage)
+          (nixpkgs.lib.filterAttrs (name: _: nixpkgs.lib.hasSuffix "@${system}" name)
+            self.homeConfigurations));
 
       homeConfigurations = {
         "simonhylander@aarch64-darwin" = mkHome {

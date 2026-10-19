@@ -9,6 +9,7 @@ in
   imports = [
     ./packages.nix
     ./agents.nix
+    ./skills.nix
     (if isDarwin then ./darwin.nix else ./linux.nix)
   ];
 

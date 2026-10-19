@@ -1,14 +1,10 @@
-{ config, lib, pkgs, ... }:
+{ config, ... }:
 
 let
   # Where this repo is checked out. Out-of-store symlinks can't reference the
   # flake's own source path, so the location is a convention: it's where the
   # repo already lives on the Mac, and where bootstrap.sh clones it on a VM.
   repo = "${config.home.homeDirectory}/development/dotfiles";
-
-  # mattpocock/skills checkout, kept live so `git pull` updates the linked
-  # skills. Not ~/development/skills — that path is SimonHylander/skills.
-  skillsRepo = "${config.home.homeDirectory}/development/mattpocock-skills";
 
   link = path: config.lib.file.mkOutOfStoreSymlink "${repo}/${path}";
 in
@@ -33,14 +29,4 @@ in
     ".agents/AGENTS.md".source = link "AGENTS.md";
     ".codex/AGENTS.md".source = link "AGENTS.md";
   };
-
-  # Skills need dynamic enumeration and have to interoperate with an external
-  # script that rewrites the same directories, so they're an activation step
-  # rather than home.file entries.
-  home.activation.syncSkills = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    export PATH="${lib.makeBinPath [ pkgs.git pkgs.coreutils pkgs.findutils ]}:$PATH"
-    export DOTFILES_ROOT="${repo}"
-    export SKILLS_REPO="${skillsRepo}"
-    $DRY_RUN_CMD ${repo}/scripts/sync-skills.sh
-  '';
 }
