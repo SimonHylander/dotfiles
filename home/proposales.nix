@@ -14,10 +14,11 @@ let
   brunoProbeCommand = "${development}/bruno-probe/claude/bruno-probe.md";
 in
 {
+  # macOS only: it relies on the Keychain for the private repos' SSH keys.
   # Everything happens at activation, not as home.file entries: listing the
   # dotfiles-proposales skills from Nix would fetch the private repo on every
   # evaluation. Network failures warn instead of failing the switch.
-  home.activation.proposalesSkills = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+  home.activation.proposalesSkills = lib.mkIf pkgs.stdenv.isDarwin (lib.hm.dag.entryAfter [ "linkGeneration" ] ''
     export PATH="${lib.makeBinPath [ pkgs.git ]}:$PATH"
     # Activation's PATH has no ssh. macOS's own reads keys from the Keychain.
     export GIT_SSH_COMMAND=/usr/bin/ssh
@@ -60,5 +61,5 @@ in
         run ln -sfn "''${skill%/}" "$target"
       done
     done
-  '';
+  '');
 }

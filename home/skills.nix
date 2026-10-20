@@ -38,13 +38,15 @@ in
 
   # Migration from the old link scripts. Their symlinks sit where home-manager
   # now puts its own, and `-b hm-bak` would keep them as duplicate
-  # `<name>.hm-bak` skills. Remove once every machine has switched.
+  # `<name>.hm-bak` skills. Matches any dotfiles checkout, because some
+  # machines ran the scripts from another path. Remove once every machine has
+  # switched.
   home.activation.removeScriptSkillLinks = lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
     for dest in "$HOME/.claude/skills" "$HOME/.agents/skills"; do
       for link in "$dest"/*; do
         [ -L "$link" ] || continue
         case "$(readlink "$link")" in
-          "${repo}/.agents/skills/"* | "${repo}/proposales/skills/"* | \
+          */dotfiles/.agents/skills/* | */dotfiles/proposales/skills/* | \
           "${config.home.homeDirectory}/development/mattpocock-skills/"*)
             run rm "$link"
             ;;

@@ -1,7 +1,8 @@
 # Dotfiles
 
 Agent configuration and a lean base toolchain, managed with [home-manager](https://github.com/nix-community/home-manager).
-One flake, one target: macOS (`aarch64-darwin`).
+One flake for macOS and NixOS. The Mac applies it with standalone home-manager. A NixOS host
+imports `homeModules.default` into home-manager's NixOS module.
 
 ## First install
 
@@ -13,6 +14,13 @@ curl -fsSL https://raw.githubusercontent.com/SimonHylander/dotfiles/main/scripts
 
 That installs Nix if missing, enables flakes, clones this repo to `~/development/dotfiles`,
 and applies the home-manager configuration. It is idempotent — re-run it any time.
+
+### On a NixOS host
+
+The host's config imports `homeModules.default` for each user and switches it with
+`nixos-rebuild`. It also has to clone this repo to `~/development/dotfiles`, because the links point
+at that checkout. [SimonHylander/system](https://github.com/SimonHylander/system) does both in
+`modules/home.nix`.
 
 ### On an exe.dev VM
 
@@ -115,15 +123,13 @@ consequence — direnv comes from `home/packages.nix`, but its shell hook is app
 ## Layout
 
 ```text
-flake.nix                 nixpkgs + home-manager, one homeConfiguration per target
+flake.nix                 nixpkgs + home-manager, homeModules.default, one homeConfiguration per Mac
 home/
-  default.nix             stateVersion, backup policy, platform imports
+  default.nix             stateVersion, backup policy, imports
   agents.nix              CLAUDE.md / AGENTS.md / .claude leaves
   skills.nix              per-skill links into ~/.claude/skills and ~/.agents/skills
   packages.nix            cross-platform toolchain
-  darwin.nix              macOS-only (deliberately minimal — Homebrew owns the rest)
   proposales.nix          macOS-only: private sibling checkouts + their skill links
-  linux.nix               Linux-only (node, pnpm, neovim, claude-code)
 scripts/
   bootstrap.sh            first install: nix -> clone -> switch
   exe-setup.sh            /exe.dev/setup stub
