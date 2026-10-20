@@ -1,20 +1,17 @@
-{ lib, system, username, homeDirectory, ... }:
+_:
 
-let
-  # Branch on `system`, not `pkgs.stdenv` — referencing pkgs from `imports`
-  # is an infinite recursion, since pkgs comes from the module system itself.
-  isDarwin = lib.hasSuffix "darwin" system;
-in
 {
+  # Node, pnpm, neovim and the agent CLIs aren't installed here. Homebrew owns
+  # them on the Mac and the NixOS host config owns them on Linux, and copies
+  # from here would shadow those. Only the cross-platform tools in
+  # packages.nix apply.
   imports = [
     ./packages.nix
     ./agents.nix
     ./skills.nix
-    (if isDarwin then ./darwin.nix else ./linux.nix)
+    ./proposales.nix
   ];
 
-  home.username = username;
-  home.homeDirectory = homeDirectory;
   home.stateVersion = "25.05";
 
   # NOTE: ~/.claude/CLAUDE.md and ~/.claude/settings.json already exist as real

@@ -33,11 +33,24 @@
             config.allowUnfreePredicate = pkg:
               builtins.elem (nixpkgs.lib.getName pkg) unfreeAllowed;
           };
-          extraSpecialArgs = { inherit system username homeDirectory mattpocock-skills; };
-          modules = [ ./home ];
+          modules = [
+            self.homeModules.default
+            {
+              home.username = username;
+              home.homeDirectory = homeDirectory;
+            }
+          ];
         };
     in
     {
+      # The whole configuration as one module, for this flake's standalone
+      # homeConfigurations and for NixOS hosts that import home-manager's NixOS
+      # module. The host sets the username and home directory.
+      homeModules.default = {
+        imports = [ ./home ];
+        _module.args = { inherit mattpocock-skills; };
+      };
+
       # The home-manager CLI from this lockfile, so applying the config can't
       # drift from the modules it was evaluated against:
       #   nix run .#home-manager -- switch --flake .#<config> -b hm-bak
