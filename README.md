@@ -99,13 +99,11 @@ are untouched.
 This repo wins name collisions. home-manager removes links to skills that no longer exist on
 the next switch.
 
-**Proposales skills (macOS only).** `home/proposales.nix` clones or pulls two private repos next
-to this one, `~/development/dotfiles-proposales` and
-[`~/development/bruno-probe`](https://github.com/proposales/bruno-probe), and links every
+**Proposales skills (macOS only).** `home/proposales.nix` clones or pulls the private
+`~/development/dotfiles-proposales` next to this one and links every
 `dotfiles-proposales/skills/<skill>` at activation. Listing those skills from Nix would fetch the
-private repo on every evaluation. The upstream `claude/bruno-probe.md` is copied to
-`bruno-probe/SKILL.md` on each switch, because Codex skips a `SKILL.md` that is a symlink. Set `BRUNO_COLLECTIONS` to the proposales repo's `bruno-collections/`
-folder, because the checkout isn't at the runner's default path.
+private repo on every evaluation. It then runs `dotfiles-proposales/install.sh`, which installs
+what isn't a plain skill directory, such as the `bruno-probe` skill.
 
 ## Machine-local settings
 
