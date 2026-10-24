@@ -13,7 +13,6 @@ in
   # writes runtime state (sessions/, projects/, history.jsonl, daemon.log) into
   # the same directory it reads config from, so those must stay real directories.
   home.file = {
-    "CLAUDE.md".source = link "CLAUDE.md";
     "AGENTS.md".source = link "AGENTS.md";
 
     ".claude/CLAUDE.md".source = link "AGENTS.md";

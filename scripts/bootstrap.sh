@@ -213,7 +213,7 @@ main() {
   ensure_profile_on_path
   ensure_direnv_hook
 
-  log "done — $root is live; edits to CLAUDE.md and skills apply immediately"
+  log "done — $root is live; edits to AGENTS.md and skills apply immediately"
 }
 
 main "$@"
