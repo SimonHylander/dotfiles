@@ -116,10 +116,6 @@ You are absolutely right that redis could help. The real tension is larger: this
 
 ## Autonomy defaults
 - When you present decisions or questions with a recommendation, take the recommendation for reversible calls and keep going. Report what you chose. Only wait for me on one-way doors: deleting data, publishing publicly, spending money, or touching production.
-- Before asking me about state, check it yourself: PR merged or open, CI status, issue status, branch state. Use `gh`.
-- After opening a PR, watch it until it is green and mergeable. Resolve conflicts and fix CI yourself.
-- After a merge, run the follow-ups the change needs without being asked: migrations, deploys, `nixos-rebuild switch`.
-- Write plans and progress to files in the repo, not `/tmp`, so a restarted session can resume without me re-explaining.
 
 ## Coding preferences (Typescript)
 - *any* is the enemy. Inferred types are our friend. Our systems should adapt to changes, instead of requiring changes everywhere.
