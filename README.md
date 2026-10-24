@@ -54,7 +54,7 @@ modules it is applying. **`-b hm-bak` is not optional**: standalone home-manager
 `home.backupFileExtension` option (that belongs to the nix-darwin/NixOS module), so without the
 flag the first switch aborts on any managed path that already exists as a real file.
 
-Editing `CLAUDE.md`, `AGENTS.md`, `.claude/settings.json` or any skill takes effect
+Editing `AGENTS.md`, `.claude/settings.json` or any skill takes effect
 **immediately** — the links point at this checkout, not at the Nix store. A `switch` is only
 needed after changing something under `home/`, adding a skill, or updating
 mattpocock/skills with `nix flake update mattpocock-skills`.
@@ -67,7 +67,6 @@ installers also write into the skill directories. So individual leaves are manag
 never a whole directory:
 
 ```text
-~/CLAUDE.md                  -> <repo>/CLAUDE.md
 ~/AGENTS.md                  -> <repo>/AGENTS.md
 ~/.claude/CLAUDE.md          -> <repo>/AGENTS.md
 ~/.claude/settings.json      -> <repo>/.claude/settings.json
@@ -80,7 +79,7 @@ never a whole directory:
 ```
 
 Pre-existing real files are moved aside with a `.hm-bak` suffix on first switch, not
-overwritten. Each link is two hops — `~/CLAUDE.md` → a store `home-manager-files` entry → the
+overwritten. Each link is two hops — `~/AGENTS.md` → a store `home-manager-files` entry → the
 checkout — which is how `mkOutOfStoreSymlink` works; the final target is always this repo.
 
 `~/.claude` itself is never linked, so `sessions/`, `projects/`, `history.jsonl` and `plugins/`
@@ -124,14 +123,14 @@ consequence — direnv comes from `home/packages.nix`, but its shell hook is app
 flake.nix                 nixpkgs + home-manager, homeModules.default, one homeConfiguration per Mac
 home/
   default.nix             stateVersion, backup policy, imports
-  agents.nix              CLAUDE.md / AGENTS.md / .claude leaves
+  agents.nix              AGENTS.md / .claude leaves
   skills.nix              per-skill links into ~/.claude/skills and ~/.agents/skills
   packages.nix            cross-platform toolchain
   proposales.nix          macOS-only: private sibling checkouts + their skill links
 scripts/
   bootstrap.sh            first install: nix -> clone -> switch
   exe-setup.sh            /exe.dev/setup stub
-CLAUDE.md  AGENTS.md      agent guidance, single source each
+AGENTS.md                 agent guidance, linked as ~/.claude/CLAUDE.md for Claude Code
 .claude/                  settings.json
 .agents/agents/           subagent definitions, linked into both harness dirs
 .agents/skills/           this repo's own skills
