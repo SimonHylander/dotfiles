@@ -114,9 +114,6 @@ You are absolutely right that redis could help. The real tension is larger: this
 - Instead of giving me instructions on how to probe something in a system to gain more information, do it yourself if you have the tools.
 - Use the technical-writing skill whenever you are writing docs or comments.
 
-## Autonomy defaults
-- When you present decisions or questions with a recommendation, take the recommendation for reversible calls and keep going. Report what you chose. Only wait for me on one-way doors: deleting data, publishing publicly, spending money, or touching production.
-
 ## Coding preferences (Typescript)
 - *any* is the enemy. Inferred types are our friend. Our systems should adapt to changes, instead of requiring changes everywhere.
 - If your TS code looks like a python dev wrote it, it is bad TS code.
