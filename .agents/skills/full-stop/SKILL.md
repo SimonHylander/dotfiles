@@ -1,55 +1,47 @@
 ---
 name: full-stop
-description: Take a change all the way to merge-ready without asking anything, and return only with a ready or dead-end verdict.
-disable-model-invocation: true
+description: Trigger this if the user says 'full stop'.
 ---
 
-# Full stop
+# Full Stop
 
-Run **unattended** from the task to the edge of merge. The user is away. Make every decision yourself, and return with exactly one **verdict**:
+Do the same work as `full-send`, but stop with the PR ready for the user to merge.
+Never merge it.
 
-- **READY**: the PR scores 9/10 or higher under the `full-send` rubric, every check passed, it is mergeable, and no review thread is unresolved.
-- **DEAD END**: the change cannot work, shown by a failing run or a cited hard constraint, such as an API that lacks the capability, at a `file:line` or doc URL. A missing credential or access you cannot obtain counts. Name what would unblock it.
+Read [full-send](../full-send/SKILL.md) and follow its workflow, proof rules,
+review, and babysitting steps. An explicit "full stop" request authorizes that
+work without a separate "full send" request. That includes full-send's
+testing permission. A "full stop" request is the permission for the test
+methods Proof needs, even when a project file says to ask first, for
+example before computer use. Use those methods directly. Its merge
+permission does not apply. The overrides below take precedence.
 
-Everything short of merging is yours to do: branch, commit, push, open and update the PR, fix review comments. Leave the merge to the user.
+## No merging
 
-Input: a task, a branch, or a PR.
+You may commit, push, rebase, fix conflicts, and use `--force-with-lease` on
+this task's branch. Never merge, enable auto-merge, enter a merge queue, push
+to the default branch, bypass branch protection, or delegate those actions.
 
-## 1. Frame
+Disable existing auto-merge and remove the PR from any merge queue before
+work begins; check again before each push. Report these changes. If you
+cannot prevent automatic merging, report the blocker before proceeding.
 
-Write the goal as a checkable statement of what must be true when the change works. This is the bar for both verdicts.
+## Stop at the gate
 
-When a choice needs product judgement, pick the option that is smallest and easiest to reverse. Log it as a decision.
+Use full-send's merge gate as the readiness check. Replace its merge and
+final report steps with a handoff. Proof and review must cover the final diff;
+recheck behavior changes and meaningful conflict fixes before handoff.
 
-## 2. Build
+Fetch the target branch and check the live PR's head, base, checks, reviews,
+and mergeability. Confirm it is open, not a draft, and not set to merge
+without the user. If someone else merged it, report that instead.
 
-Implement the change, or finish it, when the input is not already a complete change. Run the affected checks and commit.
+- **Ready to merge:** the merge gate passes. Leave the PR open and unmerged.
+- **Waiting for required approval:** only human approval remains. Confirm
+  that this is the actual blocker.
+- **Blocked:** explain what prevents readiness, what you tried, and what is
+  needed. Follow full-send's rules for asking the user.
 
-## 3. Review
-
-Read [`../sol-loop/SKILL.md`](../sol-loop/SKILL.md) and run it to the end. The PR is now filed.
-
-## 4. Validate
-
-Read [`../full-send/SKILL.md`](../full-send/SKILL.md) and run steps 1 to 4. Skip step 5: never merge.
-
-Triage any review comments on the PR with the `evaluate-pr-comments` skill. Fix the accepted ones and reply on every thread.
-
-## 5. Iterate
-
-When the score is below 9, fix what keeps it down and go back:
-
-- The fix changes behaviour: go to step 3.
-- The fix only adds tests or proof: go to step 4.
-
-Each cycle must change code, tests, or approach. When a cycle would change nothing, end in a verdict. After two distinct approaches fail on the same blocker, test whether it is a dead end, and prove it if it is.
-
-## 6. Return
-
-Send a push notification with the verdict and the PR URL.
-
-## Report
-
-1. **Decisions made without you**: one line each, `D1`, `D2`, and so on, with the reason.
-2. **Evidence**: the `full-send` table and score for READY. For DEAD END, the blocker with its proof, and each approach tried with why it failed.
-3. **Verdict**: READY or DEAD END, and the PR URL. Put this last.
+In T3 Code, call `unwatch_pull_request` before the handoff or a question.
+Report the PR link, final head, verdict, proof, reviewer outcome, and remaining
+risks. State whether the PR is still open and unmerged.
