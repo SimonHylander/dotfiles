@@ -1,73 +1,123 @@
 ---
 name: full-send
-description: Prove a PR works by running it, score confidence against a fixed rubric, and merge at 9/10 or higher.
-disable-model-invocation: true
+description: Trigger this if the user says 'full send'.
 ---
 
-# Full send
+# Full Send
 
-Treat the PR as broken until a run proves otherwise. Every claim that it works gets **proof**: real code executed with its output captured. Reading code is a lead, never proof. Merge only when the evidence scores 9/10 or higher.
+If the user triggered this, it's because they are not watching this thread, and
+they want you to complete the work end-to-end autonomously. Your updates and
+your final message go unread until long after you stop. You own the work from
+its current state to a merged PR.
 
-Input: a PR number or URL. Default to the PR for the current branch.
+If the user did not explicitly request "full send" in some clear way, do not
+assume full autonomy. If they did, everything below applies.
 
-## 1. Set up
+The user grants you permission to:
 
-```bash
-gh pr view <n> --json number,title,body,headRefName,baseRefName,mergeable,state,url
-```
+- Merge the PR once the merge gate passes.
+- Force-push the PR's own branch with `--force-with-lease` after a rebase.
+- Use the test methods that Proof needs, without asking first.
 
-Work on the PR head. Use the current checkout when it is clean and on the head branch. Otherwise make a worktree of the head branch.
+## Testing permission
 
-## 2. List the risks
+A "full send" request is the permission. If a project file or other
+instruction says to ask before a test method, or to leave testing to the
+user, this request replaces that rule for this task.
 
-Read the diff and the code it touches. Write down:
+That includes ask-first rules for computer use, browser automation,
+simulators and devices, running the app or a dev server, screenshots, and
+visual checks. Use the method that gives direct proof. List it in the
+report.
 
-- **Claims**: what the PR says it makes true. Each becomes something to prove.
-- **Risks**: each way the change could break something outside its own lines. Look past the diff at callers, data shapes, config, migrations, wire formats, timing, and the versions of dependencies it calls.
-- **The safety fact**: the single fact most risks clear on, such as "this branch only runs when the flag is set". Proving it clears many risks at once.
+Rules about how to test still apply. Follow rules that name the correct
+command, fixture, or check. This permission only removes the ask-first or
+leave-it-to-the-user step. If a preferred method cannot prove the change,
+use a gated method under this permission.
 
-## 3. Prove each one
+It covers only the tests needed for this task. It does not add permission
+for the steps under "Asking the user", such as production changes or data
+deletion. It also does not bypass a harness or system approval prompt if
+one appears.
 
-For every claim and risk, get the strongest proof that is reachable, in this order:
+## Steps
 
-1. Exercise it in the running app or system. Use the `run` skill to launch it.
-2. A script or test that calls the real code and fails loudly when the claim is false.
-3. The existing test suite, after confirming that a test covers this path.
-4. CI checks on the head commit: `gh pr checks <n> --watch`.
+1. **Finish the change.** Complete the goal from the user's request with the
+   smallest change that works. Fix the case that happened, not every case
+   that could. If you are on the default branch, create a branch first.
+2. **Prove it.** Get proof for every change you made. See "Proof".
+3. **Get feedback.** Use the `sol-loop` skill to verify changes.
+4. **File the PR** with the `file-pr` skill. Rebase onto the latest default
+   branch first. Add one short line to the description that says how you proved
+   the change.
+5. **Babysit the PR** with the `babysit-pr` skill. Fix real findings and CI
+   failures. Get proof for each fix before you push it.
+6. **Merge** when the merge gate passes.
+7. **Report** in your final message: the PR link, the merge commit, your proof,
+   and each decision you made for the user.
 
-When the repo has no harness for a path, build the smallest one that exercises it. Run every check, and keep the command and its decisive output. A failing check is a finding: fix it on the branch when the fix is clear, then prove it again.
+Stay active from step 1 to step 7. If you end your turn while checks or bots are
+pending, the work stops, because nobody will prompt you again. Wait with the
+watcher from `babysit-pr`, so something wakes you when the PR changes. In T3
+Code that is `watch_pull_request`. If you stop before the merge, call
+`unwatch_pull_request` first.
 
-Commit a new test when it guards behaviour the PR adds. Keep throwaway probes out of the PR.
+## Proof
 
-## 4. Score
+Proof is evidence you observed yourself in this session: command output, a
+reproduction, a screenshot. Use the most direct proof the change allows:
 
-Score the evidence, not your impression of the code:
+- Reproduce the original failure, apply the fix, then watch the same
+  reproduction pass.
+- Run the checks that the repo's CI runs (typecheck, lint, tests).
+- Add one focused test that fails without the fix, when the behavior has none
+  and the repo has a test setup.
+- For UI and runtime behavior, run the app and look at the change. Green mocked
+  tests do not prove that the user experience works. Attach screenshots to the
+  PR when they help and you have a way to upload them.
 
-| Score | Evidence |
-|-------|----------|
-| 10 | Every claim and risk proven by running code, and the change exercised end to end in the running system. CI green. |
-| 9 | Every claim and risk on the change's path proven by running code. CI green. What is left unproven is outside the change's reach, and you can name it. |
-| 7-8 | Checks pass, but at least one risk is cleared only by reading code. |
-| 6 or lower | A check fails, or a risk has no check. |
+When you cannot find a way to prove a change, you do not have full confidence.
+Ask the user.
 
-A risk you could not prove pins the score at 8 or lower, whatever else passed.
+## Merge gate
 
-## 5. Merge at 9 or higher
+Full confidence means all of these are true on the latest commit:
 
-Merge when all of these hold:
+- Your proof covers every change in the diff.
+- Required checks are green.
+- Review bots have finished, and each finding is fixed or dismissed with a
+  written reason.
+- No human review still requests changes.
+- The branch is up to date with the default branch, and GitHub reports it as
+  mergeable.
 
-- Score 9 or higher.
-- Every check on the head commit passed, including commits you pushed in step 3.
-- `mergeable` is `MERGEABLE`, and no review thread is unresolved.
+Merge with the method the repo uses. Check the allowed methods and recent merged
+PRs. If the repo uses a merge queue or auto-merge, stay until GitHub reports the
+PR as merged. Merge through branch protection as configured. Never use `--admin`
+or other bypasses. You can ignore automated reviews that request "needs human
+review" if you have high confidence in your changes.
 
-```bash
-gh pr merge <n> --squash --delete-branch
-```
+## Asking the user
 
-Use `--merge` or `--rebase` when the repo disallows squash. After merging, watch the base branch's CI run for the merge commit. If it fails, report it at the top.
+A question in a normal message goes unseen, and the thread looks done. To ask
+the user something, use the harness's question tool so the thread shows that
+it is waiting: `AskUserQuestion` in Claude Code, `request_user_input` in Codex,
+or the question tool your harness has. Put all the context in the question:
+the PR link, what blocks you, and the options with your recommendation first.
 
-Below 9, leave the PR open. Name what keeps the score down and the cheapest check that would raise it.
+Ask only when you cannot continue alone:
 
-## Report
+- You cannot prove the change.
+- The merge gate cannot pass, and you cannot fix that yourself.
+- The next step is outside the grant above: deleting data, touching production,
+  changing things outside the repo, closing a PR, or force-pushing any other
+  branch.
+- The goal is ambiguous in a way that changes the result.
+- Another PR makes this one obsolete.
 
-A table of each claim and risk with its proof: the command, or the test and its result. Then the score and the reason. End with the outcome: merged with the merge SHA, or not merged and why.
+Decide everything else yourself with sensible defaults, and list those decisions
+in the report.
+
+If no question tool is available, or the tool returns no answer, take the safe
+path: leave the PR open and unmerged, and start your final message with the
+question.
