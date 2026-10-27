@@ -1,23 +1,34 @@
 ---
 name: assign-review
-description: Request a review from a given person on a GitHub PR. Use when the user says "assign review", "add <person> as reviewer", or invokes /assign-review.
+description: Add a reviewer to a GitHub PR. Use when the user names a person or team to review a PR.
 ---
 
 # Assign Review
 
-Add the given person as a reviewer on a GitHub PR. Do nothing else.
+Request a review from one person or team on a GitHub PR. The review request is the only change you make.
 
 ## Inputs
 
-- **Reviewer**: a GitHub login (`octocat`) or a team (`org/team`). Required.
-- **PR**: a number or URL. If omitted, use the PR for the current branch.
+- **Reviewer**: a GitHub login (`octocat`), a team (`org/team`), or a display name. Required.
+- **PR**: a number or URL. If omitted, `gh` uses the PR for the current branch.
 
 ## Steps
 
-1. If the reviewer is a display name, not a login, resolve it with
-   `gh api repos/{owner}/{repo}/collaborators --paginate --jq '.[].login'`
-   and pick the matching login. If no single match exists, ask the user.
-2. Run `gh pr edit [<pr>] --add-reviewer <reviewer>`.
-3. Confirm with `gh pr view [<pr>] --json url,reviewRequests`.
+1. If the reviewer is a display name, resolve it to a login. This query matches both login and name:
 
-Report the PR URL and the reviewer in one line.
+   ```sh
+   gh api graphql -f o=<owner> -f r=<repo> -f q=<name> -f query='
+     query($o:String!,$r:String!,$q:String!){repository(owner:$o,name:$r){
+       assignableUsers(query:$q,first:5){nodes{login name}}}}'
+   ```
+
+   Done when exactly one login matches. With zero or several matches, ask the user which login to use.
+2. Run `gh pr edit [<pr>] --add-reviewer <login-or-team>`.
+3. Run `gh pr view [<pr>] --json url,reviewRequests`. Done when the reviewer appears in `reviewRequests`.
+
+## Gotchas
+
+- GitHub rejects the PR author as a reviewer. Tell the user and stop.
+- Team reviewers need the `read:org` token scope. If `gh` reports a missing scope, tell the user to run `gh auth refresh -s read:org`.
+
+Report the PR URL and the reviewer's login in one line.
