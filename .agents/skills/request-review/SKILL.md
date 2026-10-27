@@ -1,9 +1,9 @@
 ---
-name: assign-review
+name: request-review
 description: Add a reviewer to a GitHub PR. Use when the user names a person or team to review a PR.
 ---
 
-# Assign Review
+# Request Review
 
 Request a review from one person or team on a GitHub PR. The review request is the only change you make.
 
