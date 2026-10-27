@@ -74,13 +74,13 @@ never a whole directory:
 ~/.codex/AGENTS.md           -> <repo>/AGENTS.md
 ~/.claude/agents             -> <repo>/.agents/agents
 ~/.agents/agents             -> <repo>/.agents/agents
-~/.claude/skills/<skill>     -> <repo>/.agents/skills/<skill>  or  <store>/mattpocock-skills/...
-~/.agents/skills/<skill>     -> <repo>/.agents/skills/<skill>  or  <store>/mattpocock-skills/...
+~/.claude/skills/<skill>     -> <repo>/.agents/skills/<skill>  or  ~/development/mattpocock-skills/skills/...
+~/.agents/skills/<skill>     -> <repo>/.agents/skills/<skill>  or  ~/development/mattpocock-skills/skills/...
 ```
 
 Pre-existing real files are moved aside with a `.hm-bak` suffix on first switch, not
 overwritten. Each link is two hops — `~/AGENTS.md` → a store `home-manager-files` entry → the
-checkout — which is how `mkOutOfStoreSymlink` works; the final target is always this repo.
+checkout — which is how `mkOutOfStoreSymlink` works; the final target is always a checkout.
 
 `~/.claude` itself is never linked, so `sessions/`, `projects/`, `history.jsonl` and `plugins/`
 are untouched.
@@ -91,9 +91,10 @@ are untouched.
 
 - **This repo's skills** link to the checkout, so edits are live. They are listed from the flake
   source, so a new skill shows up after `git add` and a switch.
-- **[mattpocock/skills](https://github.com/mattpocock/skills)** is a flake input pinned in
-  `flake.lock`, linked from the store. Every bucket except `deprecated/` is linked. Update with
-  `nix flake update mattpocock-skills`.
+- **[mattpocock/skills](https://github.com/mattpocock/skills)** links to a checkout in
+  `~/development/mattpocock-skills`, which each switch clones or pulls after the dotfiles checkout.
+  Every bucket except `deprecated/` is linked. The skill list comes from the flake input pinned in
+  `flake.lock`, so a new skill shows up after `nix flake update mattpocock-skills` and a switch.
 
 This repo wins name collisions. home-manager removes links to skills that no longer exist on
 the next switch.
