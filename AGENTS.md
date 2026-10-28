@@ -125,6 +125,4 @@ You are absolutely right that redis could help. The real tension is larger: this
 - Mechanics: gpt-6.1-sol is reachable through the the "claudex" alias.
 - Always use sonnet-5.5 subagents when scraping and exploring code and files.
 
-Never leave watermarks like "Generated with <X>"
-
-
+When you need to understand root causes/propose refactors and not just symptoms, prefer to "use /how to understand how X works"
