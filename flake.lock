@@ -56,7 +56,24 @@
       "inputs": {
         "home-manager": "home-manager",
         "mattpocock-skills": "mattpocock-skills",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "vercel-agent-skills": "vercel-agent-skills"
+      }
+    },
+    "vercel-agent-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1793137202,
+        "narHash": "sha256-uujS8sGulF6STR4adqYCHBxPY9pHddXfFfX6UqAG24c=",
+        "owner": "vercel-labs",
+        "repo": "agent-skills",
+        "rev": "1a2c79d4e6c4a2283dc2c614b6538cbe1ed5ca62",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vercel-labs",
+        "repo": "agent-skills",
+        "type": "github"
       }
     }
   },

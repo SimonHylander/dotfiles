@@ -15,9 +15,16 @@
       url = "github:mattpocock/skills";
       flake = false;
     };
+
+    # Only skills/react-best-practices is linked, by home/skills.nix. Bump with
+    # `nix flake update vercel-agent-skills`.
+    vercel-agent-skills = {
+      url = "github:vercel-labs/agent-skills";
+      flake = false;
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, mattpocock-skills, ... }:
+  outputs = { self, nixpkgs, home-manager, mattpocock-skills, vercel-agent-skills, ... }:
     let
       supportedSystems = [ "aarch64-darwin" ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
@@ -48,7 +55,7 @@
       # module. The host sets the username and home directory.
       homeModules.default = {
         imports = [ ./home ];
-        _module.args = { inherit mattpocock-skills; };
+        _module.args = { inherit mattpocock-skills vercel-agent-skills; };
       };
 
       # The home-manager CLI from this lockfile, so applying the config can't
