@@ -94,6 +94,9 @@ are untouched.
 - **[mattpocock/skills](https://github.com/mattpocock/skills)** is a flake input pinned in
   `flake.lock`, linked from the store. Every bucket except `deprecated/` is linked. Update with
   `nix flake update mattpocock-skills`.
+- **[vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills)** is a flake input
+  the same way, but only `react-best-practices` is linked, as `vercel-react-best-practices`.
+  Update with `nix flake update vercel-agent-skills`.
 
 This repo wins name collisions. home-manager removes links to skills that no longer exist on
 the next switch.

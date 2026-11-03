@@ -1,4 +1,4 @@
-{ config, lib, mattpocock-skills, ... }:
+{ config, lib, mattpocock-skills, vercel-agent-skills, ... }:
 
 let
   repo = "${config.home.homeDirectory}/development/dotfiles";
@@ -18,13 +18,18 @@ let
         (name: "${mattpocock-skills}/skills/${bucket}/${name}")))
     (builtins.readDir "${mattpocock-skills}/skills");
 
+  # One skill picked from vercel-labs/agent-skills, named after its SKILL.md.
+  vercel = {
+    vercel-react-best-practices = "${vercel-agent-skills}/skills/react-best-practices";
+  };
+
   # Listed from the flake source, so a new skill needs `git add` and a switch.
   # Links point at the checkout, so edits to an existing skill are live.
   own = lib.genAttrs (skillNames ../.agents/skills)
     (name: config.lib.file.mkOutOfStoreSymlink "${repo}/.agents/skills/${name}");
 
   # Ours win name collisions (handoff, retro, tdd, teach).
-  skills = mattpocock // own;
+  skills = mattpocock // vercel // own;
 in
 {
   # One link per skill, never the whole directory: other installers
