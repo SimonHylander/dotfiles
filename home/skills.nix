@@ -28,7 +28,7 @@ let
   own = lib.genAttrs (skillNames ../.agents/skills)
     (name: config.lib.file.mkOutOfStoreSymlink "${repo}/.agents/skills/${name}");
 
-  # Ours win name collisions (handoff, retro, tdd, teach).
+  # Ours win name collisions (handoff, retro, teach).
   skills = mattpocock // vercel // own;
 in
 {
