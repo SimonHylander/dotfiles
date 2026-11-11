@@ -108,8 +108,6 @@ You are absolutely right that redis could help. The real tension is larger: this
 - Be careful with destructive actions that are not explicitly requested by the user.
 - Tests are good! Endless smoke tests, "regression tests" for feature deletions, etc, much less good. Tests should be focused, not slop.
 - Determine wether a test is "high" or "low" signal before writing them. a test has signal when a plausabile regression turns it red and nothing else catches that regression: not the type checker, another test in the file.
-- Comments are a great way to clarify functionality and how code is used. Don't comment every line, but feel free to describe (concicely) how functions are used above function definitions, classes, etc.
-- Keep comments up to date! When making changes, it's important to keep things in sync.
 - When doing large work or refactors that introduces larger change diffs, prefer to aim for GH stacked PR: https://docs.github.com/en/pull-requests/get-started/stacked-prs-quickstart.
 - Dont ask me wether to push or create a PR after we have implemented something, just do it yourself.
 - Instead of giving me instructions on how to probe something in a system to gain more information, do it yourself if you have the tools.
