@@ -1,4 +1,4 @@
-{ config, lib, mattpocock-skills, vercel-agent-skills, ... }:
+{ config, lib, mattpocock-skills, vercel-agent-skills, components-build, ui-sdk, ... }:
 
 let
   repo = "${config.home.homeDirectory}/development/dotfiles";
@@ -18,9 +18,13 @@ let
         (name: "${mattpocock-skills}/skills/${bucket}/${name}")))
     (builtins.readDir "${mattpocock-skills}/skills");
 
-  # One skill picked from vercel-labs/agent-skills, named after its SKILL.md.
+  # Skills picked from vercel repos, each named after its SKILL.md.
   vercel = {
     vercel-react-best-practices = "${vercel-agent-skills}/skills/react-best-practices";
+    vercel-composition-patterns = "${vercel-agent-skills}/skills/composition-patterns";
+    vercel-react-native-skills = "${vercel-agent-skills}/skills/react-native-skills";
+    building-components = "${components-build}/skills/building-components";
+    ui-sdk = "${ui-sdk}/packages/core/skills/ui-sdk";
   };
 
   # Listed from the flake source, so a new skill needs `git add` and a switch.

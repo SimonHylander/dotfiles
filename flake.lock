@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "components-build": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1794315017,
+        "narHash": "sha256-4Hix6L+cstp1prdMFZ4ImWt9V2mayihGHX/uKj3nFRM=",
+        "owner": "vercel",
+        "repo": "components.build",
+        "rev": "0861fbcfe4f78c50eaafc202f5fb7661d641ddff",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vercel",
+        "repo": "components.build",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -54,10 +70,28 @@
     },
     "root": {
       "inputs": {
+        "components-build": "components-build",
         "home-manager": "home-manager",
         "mattpocock-skills": "mattpocock-skills",
         "nixpkgs": "nixpkgs",
+        "ui-sdk": "ui-sdk",
         "vercel-agent-skills": "vercel-agent-skills"
+      }
+    },
+    "ui-sdk": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1794659400,
+        "narHash": "sha256-vXGE8RHgiJ2+RtmVfX8ZtuyE8pSN0WvtiFf81DVTNN4=",
+        "owner": "vercel-labs",
+        "repo": "ui",
+        "rev": "220c1a0d7278872286a620a8e4ee4210ca46f9bd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vercel-labs",
+        "repo": "ui",
+        "type": "github"
       }
     },
     "vercel-agent-skills": {
