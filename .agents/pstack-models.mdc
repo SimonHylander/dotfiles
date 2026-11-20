@@ -1,9 +1,4 @@
----
-description: pstack per-role model choices (overrides skill defaults)
-alwaysApply: true
----
-# pstack model configuration. One line per role. Delete a line to fall back to the skill default.
-# A value is `<model id>-<effort>`. The family is the vendor prefix: claude, gpt, gemini, grok.
-# In T3 Code, run an entry from another provider with `delegate_task`: gpt-* on codex, gemini-* and grok-* on cursor. Resolve ids with `orchestrator_capabilities`. Keep the judge read-only.
-# Outside T3 Code, an entry the harness cannot spawn counts as rejected.
+# Each value is `<model id>-<effort>`. The effort is the last token.
+# Besides the families the arena skill defines, `gpt-*` and `gemini-*` are each a family.
+# In T3 Code, spawn an entry your own subagent tool cannot run with `delegate_task`.
 arena cross-judge pool: claude-opus-5-5-xhigh, gpt-6.2-sol-xhigh, gemini-4-neon-xhigh
