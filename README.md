@@ -74,6 +74,7 @@ never a whole directory:
 ~/.codex/AGENTS.md           -> <repo>/AGENTS.md
 ~/.claude/agents             -> <repo>/.agents/agents
 ~/.agents/agents             -> <repo>/.agents/agents
+~/.cursor/rules/pstack-models.mdc -> <repo>/.agents/pstack-models.mdc
 ~/.claude/skills/<skill>     -> <repo>/.agents/skills/<skill>  or  <store>/mattpocock-skills/...
 ~/.agents/skills/<skill>     -> <repo>/.agents/skills/<skill>  or  <store>/mattpocock-skills/...
 ```
