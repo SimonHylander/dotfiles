@@ -16,6 +16,22 @@
         "type": "github"
       }
     },
+    "gridlines": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1795261441,
+        "narHash": "sha256-z3bG03wMD6yIlIXIgFXtlm3a0QhahtLr4EsQHmW1fQg=",
+        "owner": "pritamux",
+        "repo": "gridlines",
+        "rev": "20d0944c8eec66957c1bde9c9919345ab4c6b4eb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pritamux",
+        "repo": "gridlines",
+        "type": "github"
+      }
+    },
     "hallmark": {
       "flake": false,
       "locked": {
@@ -87,6 +103,7 @@
     "root": {
       "inputs": {
         "components-build": "components-build",
+        "gridlines": "gridlines",
         "hallmark": "hallmark",
         "home-manager": "home-manager",
         "mattpocock-skills": "mattpocock-skills",
