@@ -103,6 +103,8 @@ are untouched.
   `nix flake update vercel-agent-skills components-build ui-sdk`.
 - **[Nutlope/hallmark](https://github.com/Nutlope/hallmark)** is a flake input linked the same way
   as `hallmark`. Update with `nix flake update hallmark`.
+- **[pritamux/gridlines](https://github.com/pritamux/gridlines)** is a flake input linked the same
+  way as `gridlines`. Update with `nix flake update gridlines`.
 
 This repo wins name collisions. home-manager removes links to skills that no longer exist on
 the next switch.
