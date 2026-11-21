@@ -32,9 +32,16 @@
       url = "github:vercel-labs/ui";
       flake = false;
     };
+
+    # Linked from the store by home/skills.nix. Bump with
+    # `nix flake update hallmark`.
+    hallmark = {
+      url = "github:Nutlope/hallmark";
+      flake = false;
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, mattpocock-skills, vercel-agent-skills, components-build, ui-sdk, ... }:
+  outputs = { self, nixpkgs, home-manager, mattpocock-skills, vercel-agent-skills, components-build, ui-sdk, hallmark, ... }:
     let
       supportedSystems = [ "aarch64-darwin" ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
@@ -65,7 +72,7 @@
       # module. The host sets the username and home directory.
       homeModules.default = {
         imports = [ ./home ];
-        _module.args = { inherit mattpocock-skills vercel-agent-skills components-build ui-sdk; };
+        _module.args = { inherit mattpocock-skills vercel-agent-skills components-build ui-sdk hallmark; };
       };
 
       # The home-manager CLI from this lockfile, so applying the config can't

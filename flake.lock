@@ -16,6 +16,22 @@
         "type": "github"
       }
     },
+    "hallmark": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1794398164,
+        "narHash": "sha256-xfHv/bcZcYoqEeX2hCZOADCEJ2m3tRDflKJmyiR5LNk=",
+        "owner": "Nutlope",
+        "repo": "hallmark",
+        "rev": "04977e15f3dfd6ee4b74c887dac3eb52665d6c92",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Nutlope",
+        "repo": "hallmark",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -71,6 +87,7 @@
     "root": {
       "inputs": {
         "components-build": "components-build",
+        "hallmark": "hallmark",
         "home-manager": "home-manager",
         "mattpocock-skills": "mattpocock-skills",
         "nixpkgs": "nixpkgs",

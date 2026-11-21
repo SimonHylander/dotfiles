@@ -101,6 +101,8 @@ are untouched.
   `building-components` from [vercel/components.build](https://github.com/vercel/components.build),
   and `ui-sdk` from [vercel-labs/ui](https://github.com/vercel-labs/ui). Update with
   `nix flake update vercel-agent-skills components-build ui-sdk`.
+- **[Nutlope/hallmark](https://github.com/Nutlope/hallmark)** is a flake input linked the same way
+  as `hallmark`. Update with `nix flake update hallmark`.
 
 This repo wins name collisions. home-manager removes links to skills that no longer exist on
 the next switch.
