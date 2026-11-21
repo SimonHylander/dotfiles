@@ -1,4 +1,4 @@
-{ config, lib, mattpocock-skills, vercel-agent-skills, components-build, ui-sdk, ... }:
+{ config, lib, mattpocock-skills, vercel-agent-skills, components-build, ui-sdk, hallmark, ... }:
 
 let
   repo = "${config.home.homeDirectory}/development/dotfiles";
@@ -27,13 +27,17 @@ let
     ui-sdk = "${ui-sdk}/packages/core/skills/ui-sdk";
   };
 
+  external = {
+    hallmark = "${hallmark}/skills/hallmark";
+  };
+
   # Listed from the flake source, so a new skill needs `git add` and a switch.
   # Links point at the checkout, so edits to an existing skill are live.
   own = lib.genAttrs (skillNames ../.agents/skills)
     (name: config.lib.file.mkOutOfStoreSymlink "${repo}/.agents/skills/${name}");
 
   # Ours win name collisions (handoff, retro, teach).
-  skills = mattpocock // vercel // own;
+  skills = mattpocock // vercel // external // own;
 in
 {
   # One link per skill, never the whole directory: other installers
