@@ -1,4 +1,4 @@
-{ config, lib, mattpocock-skills, vercel-agent-skills, components-build, ui-sdk, hallmark, gridlines, ... }:
+{ config, lib, mattpocock-skills, vercel-agent-skills, components-build, ui-sdk, anthropic-skills, hallmark, gridlines, make-interfaces-feel-better, ... }:
 
 let
   repo = "${config.home.homeDirectory}/development/dotfiles";
@@ -28,8 +28,10 @@ let
   };
 
   external = {
+    frontend-design = "${anthropic-skills}/skills/frontend-design";
     hallmark = "${hallmark}/skills/hallmark";
     gridlines = "${gridlines}/skills/gridlines";
+    make-interfaces-feel-better = "${make-interfaces-feel-better}/skills/make-interfaces-feel-better";
   };
 
   # Listed from the flake source, so a new skill needs `git add` and a switch.

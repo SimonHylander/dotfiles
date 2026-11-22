@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "anthropic-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1794838967,
+        "narHash": "sha256-Gr9LatjawHHK9uKpoclWoiDHZ0NTpP3/4Pmeatl8p/Q=",
+        "owner": "anthropics",
+        "repo": "skills",
+        "rev": "e4bb5d960d87126ff3b3a8af1a104b7db67560ba",
+        "type": "github"
+      },
+      "original": {
+        "owner": "anthropics",
+        "repo": "skills",
+        "type": "github"
+      }
+    },
     "components-build": {
       "flake": false,
       "locked": {
@@ -68,6 +84,22 @@
         "type": "github"
       }
     },
+    "make-interfaces-feel-better": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1794966158,
+        "narHash": "sha256-8fqjREP5WRIUm0now0vaHHwvMkfqJzwck04Zp9mp1eo=",
+        "owner": "jakubkrehel",
+        "repo": "make-interfaces-feel-better",
+        "rev": "6d9f2f1df10e8ce2ae1708598a73b0506fb98794",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jakubkrehel",
+        "repo": "make-interfaces-feel-better",
+        "type": "github"
+      }
+    },
     "mattpocock-skills": {
       "flake": false,
       "locked": {
@@ -102,10 +134,12 @@
     },
     "root": {
       "inputs": {
+        "anthropic-skills": "anthropic-skills",
         "components-build": "components-build",
         "gridlines": "gridlines",
         "hallmark": "hallmark",
         "home-manager": "home-manager",
+        "make-interfaces-feel-better": "make-interfaces-feel-better",
         "mattpocock-skills": "mattpocock-skills",
         "nixpkgs": "nixpkgs",
         "ui-sdk": "ui-sdk",
