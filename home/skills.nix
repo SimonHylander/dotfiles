@@ -1,4 +1,4 @@
-{ config, lib, mattpocock-skills, vercel-agent-skills, ... }:
+{ config, lib, mattpocock-skills, vercel-agent-skills, components-build, ui-sdk, anthropic-skills, hallmark, make-interfaces-feel-better, ... }:
 
 let
   repo = "${config.home.homeDirectory}/development/dotfiles";
@@ -18,9 +18,25 @@ let
         (name: "${mattpocock-skills}/skills/${bucket}/${name}")))
     (builtins.readDir "${mattpocock-skills}/skills");
 
-  # One skill picked from vercel-labs/agent-skills, named after its SKILL.md.
+  # Skills picked from vercel repos, each named after its SKILL.md.
   vercel = {
     vercel-react-best-practices = "${vercel-agent-skills}/skills/react-best-practices";
+    vercel-composition-patterns = "${vercel-agent-skills}/skills/composition-patterns";
+    vercel-react-native-skills = "${vercel-agent-skills}/skills/react-native-skills";
+    building-components = "${components-build}/skills/building-components";
+    ui-sdk = "${ui-sdk}/packages/core/skills/ui-sdk";
+  };
+
+  anthropic = {
+    frontend-design = "${anthropic-skills}/skills/frontend-design";
+  };
+
+  nutlope = {
+    hallmark = "${hallmark}/skills/hallmark";
+  };
+
+  jakubkrehel = {
+    make-interfaces-feel-better = "${make-interfaces-feel-better}/skills/make-interfaces-feel-better";
   };
 
   # Listed from the flake source, so a new skill needs `git add` and a switch.
@@ -29,7 +45,7 @@ let
     (name: config.lib.file.mkOutOfStoreSymlink "${repo}/.agents/skills/${name}");
 
   # Ours win name collisions (handoff, retro, teach).
-  skills = mattpocock // vercel // own;
+  skills = mattpocock // vercel // anthropic // nutlope // jakubkrehel // own;
 in
 {
   # One link per skill, never the whole directory: other installers
