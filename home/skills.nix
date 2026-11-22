@@ -1,4 +1,4 @@
-{ config, lib, mattpocock-skills, vercel-agent-skills, components-build, ui-sdk, anthropic-skills, hallmark, make-interfaces-feel-better, ... }:
+{ config, lib, mattpocock-skills, vercel-agent-skills, components-build, ui-sdk, anthropic-skills, hallmark, gridlines, make-interfaces-feel-better, ... }:
 
 let
   repo = "${config.home.homeDirectory}/development/dotfiles";
@@ -27,15 +27,10 @@ let
     ui-sdk = "${ui-sdk}/packages/core/skills/ui-sdk";
   };
 
-  anthropic = {
+  external = {
     frontend-design = "${anthropic-skills}/skills/frontend-design";
-  };
-
-  nutlope = {
     hallmark = "${hallmark}/skills/hallmark";
-  };
-
-  jakubkrehel = {
+    gridlines = "${gridlines}/skills/gridlines";
     make-interfaces-feel-better = "${make-interfaces-feel-better}/skills/make-interfaces-feel-better";
   };
 
@@ -45,7 +40,7 @@ let
     (name: config.lib.file.mkOutOfStoreSymlink "${repo}/.agents/skills/${name}");
 
   # Ours win name collisions (handoff, retro, teach).
-  skills = mattpocock // vercel // anthropic // nutlope // jakubkrehel // own;
+  skills = mattpocock // vercel // external // own;
 in
 {
   # One link per skill, never the whole directory: other installers

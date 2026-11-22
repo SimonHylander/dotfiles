@@ -74,6 +74,7 @@ never a whole directory:
 ~/.codex/AGENTS.md           -> <repo>/AGENTS.md
 ~/.claude/agents             -> <repo>/.agents/agents
 ~/.agents/agents             -> <repo>/.agents/agents
+~/.cursor/rules/pstack-models.mdc -> <repo>/.agents/pstack-models.mdc
 ~/.claude/skills/<skill>     -> <repo>/.agents/skills/<skill>  or  <store>/mattpocock-skills/...
 ~/.agents/skills/<skill>     -> <repo>/.agents/skills/<skill>  or  <store>/mattpocock-skills/...
 ```
@@ -100,10 +101,14 @@ are untouched.
   `building-components` from [vercel/components.build](https://github.com/vercel/components.build),
   and `ui-sdk` from [vercel-labs/ui](https://github.com/vercel-labs/ui). Update with
   `nix flake update vercel-agent-skills components-build ui-sdk`.
-- **[Nutlope/hallmark](https://github.com/Nutlope/hallmark)** is a flake input the same way. Only
-  `hallmark` is linked. Update with `nix flake update hallmark`.
+- **[anthropics/skills](https://github.com/anthropics/skills)** is a flake input linked the same
+  way, but only `frontend-design` is linked. Update with `nix flake update anthropic-skills`.
+- **[Nutlope/hallmark](https://github.com/Nutlope/hallmark)** is a flake input linked the same way
+  as `hallmark`. Update with `nix flake update hallmark`.
+- **[pritamux/gridlines](https://github.com/pritamux/gridlines)** is a flake input linked the same
+  way as `gridlines`. Update with `nix flake update gridlines`.
 - **[jakubkrehel/make-interfaces-feel-better](https://github.com/jakubkrehel/make-interfaces-feel-better)**
-  is a flake input the same way. Only `make-interfaces-feel-better` is linked. Update with
+  is a flake input linked the same way as `make-interfaces-feel-better`. Update with
   `nix flake update make-interfaces-feel-better`.
 
 This repo wins name collisions. home-manager removes links to skills that no longer exist on

@@ -33,29 +33,36 @@
       flake = false;
     };
 
-    # Only skills/frontend-design is linked, by home/skills.nix. Bump with
+    # Linked from the store by home/skills.nix. Bump with
     # `nix flake update anthropic-skills`.
     anthropic-skills = {
       url = "github:anthropics/skills";
       flake = false;
     };
 
-    # Only skills/hallmark is linked, by home/skills.nix. Bump with
+    # Linked from the store by home/skills.nix. Bump with
     # `nix flake update hallmark`.
     hallmark = {
       url = "github:Nutlope/hallmark";
       flake = false;
     };
 
-    # Only skills/make-interfaces-feel-better is linked, by home/skills.nix.
-    # Bump with `nix flake update make-interfaces-feel-better`.
+    # Linked from the store by home/skills.nix. Bump with
+    # `nix flake update gridlines`.
+    gridlines = {
+      url = "github:pritamux/gridlines";
+      flake = false;
+    };
+
+    # Linked from the store by home/skills.nix. Bump with
+    # `nix flake update make-interfaces-feel-better`.
     make-interfaces-feel-better = {
       url = "github:jakubkrehel/make-interfaces-feel-better";
       flake = false;
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, mattpocock-skills, vercel-agent-skills, components-build, ui-sdk, anthropic-skills, hallmark, make-interfaces-feel-better, ... }:
+  outputs = { self, nixpkgs, home-manager, mattpocock-skills, vercel-agent-skills, components-build, ui-sdk, anthropic-skills, hallmark, gridlines, make-interfaces-feel-better, ... }:
     let
       supportedSystems = [ "aarch64-darwin" ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
@@ -86,7 +93,7 @@
       # module. The host sets the username and home directory.
       homeModules.default = {
         imports = [ ./home ];
-        _module.args = { inherit mattpocock-skills vercel-agent-skills components-build ui-sdk anthropic-skills hallmark make-interfaces-feel-better; };
+        _module.args = { inherit mattpocock-skills vercel-agent-skills components-build ui-sdk anthropic-skills hallmark gridlines make-interfaces-feel-better; };
       };
 
       # The home-manager CLI from this lockfile, so applying the config can't

@@ -27,5 +27,9 @@ in
 
     ".agents/AGENTS.md".source = link "AGENTS.md";
     ".codex/AGENTS.md".source = link "AGENTS.md";
+
+    # The vendored pstack skills (arena, architect, swarm, how, why, reflect)
+    # read their per-role models from this path, Cursor or not.
+    ".cursor/rules/pstack-models.mdc".source = link ".agents/pstack-models.mdc";
   };
 }

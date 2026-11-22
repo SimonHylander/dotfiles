@@ -1,0 +1,4 @@
+# Each value is `<model id>-<effort>`. The effort is the last token.
+# Besides the families the arena skill defines, `gpt-*` and `gemini-*` are each a family.
+# In T3 Code, spawn an entry your own subagent tool cannot run with `delegate_task`.
+arena cross-judge pool: claude-opus-5-5-high, gpt-6.2-sol-high, gemini-4-neon-high
