@@ -62,13 +62,17 @@ In addition to clearly communicating. It's important that we clearly communicate
 - For completed work, concisely restate it but do not overload with response detail.
 
 #### 4. Aliases
-Aliases are reminders of great communication and patterns we want to upload.
+Aliases are shorthand for prompts we repeat.
 When you see these exact aliases, expand them and act as if their expansions where given to you directly.
 If these are referenced in a longer string, they are not aliases, do not expand.
 
+##### Communication
 scr = `Simplify, compress, and repeat your response.`
 foc = `Focus on what matters most here. Whats the true signal? Whats the true value? Boil your response down into the most important thing we need to focus on`
 ref = `Rewrite your responses with reference points.`
+
+##### Workflow
+rrv = `Re-request review from the existing reviewers on this branch's pull request.`
 
 
 #### Examples
