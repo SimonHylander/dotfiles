@@ -1,12 +1,12 @@
 ---
-name: ledger
-description: Review or evaluate code or a system against Simon's preference ledger, or add a preference to it.
+name: taste
+description: Review or evaluate code or a system against Simon's engineering taste, or add a preference to it.
 disable-model-invocation: true
 ---
 
-# Ledger
+# Taste
 
-[LEDGER.md](LEDGER.md) holds Simon's preferences as numbered entries (`L1`, `L2`, ...). Read it in full before any step.
+[TASTE.md](TASTE.md) holds Simon's preferences as numbered entries (`T1`, `T2`, ...). Read it in full before any step.
 
 If the argument starts with `add`, follow [Add an entry](#add-an-entry). Otherwise review.
 
@@ -20,6 +20,6 @@ If the argument starts with `add`, follow [Add an entry](#add-an-entry). Otherwi
 ## Add an entry
 
 1. Find the entry closest to the new preference. If one covers it, sharpen that entry instead of adding a second.
-2. Otherwise append the next `L` number. Write the target as a positive statement and give it a check the reviewer can run against a diff.
+2. Otherwise append the next `T` number. Write the target as a positive statement and give it a check the reviewer can run against a diff.
 
 Done when the preference lives in exactly one entry and that entry has a check.
