@@ -56,3 +56,9 @@ The change is the smallest one that solves the stated problem. It carries no abs
 
 - **Check:** for each new abstraction, name the second caller that uses it today.
 - **Depth:** [subtract-before-you-add](../principle-subtract-before-you-add/SKILL.md).
+
+### T8 Proven claims
+
+Every claim a PR makes ships with proof that the change does what it says. A visible change ships with a screenshot or video of the result, since visual proof builds the most confidence to merge.
+
+- **Check:** for each claim in the PR description, find its proof: a test that goes _red_ without the change, command output, a log, or a screenshot or video. A claim with no proof is a finding. A visible change with no screenshot or video is a finding.
