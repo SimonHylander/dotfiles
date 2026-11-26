@@ -84,6 +84,22 @@
         "type": "github"
       }
     },
+    "impeccable": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1795656235,
+        "narHash": "sha256-E8WX7pDygLZ7IOJ/4iargSxQP0UMR886xv4ghTBSVyM=",
+        "owner": "pbakaus",
+        "repo": "impeccable",
+        "rev": "2fc5e1459efbbf06d92c7306517c286bf12490cf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pbakaus",
+        "repo": "impeccable",
+        "type": "github"
+      }
+    },
     "make-interfaces-feel-better": {
       "flake": false,
       "locked": {
@@ -139,6 +155,7 @@
         "gridlines": "gridlines",
         "hallmark": "hallmark",
         "home-manager": "home-manager",
+        "impeccable": "impeccable",
         "make-interfaces-feel-better": "make-interfaces-feel-better",
         "mattpocock-skills": "mattpocock-skills",
         "nixpkgs": "nixpkgs",

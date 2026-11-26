@@ -60,9 +60,16 @@
       url = "github:jakubkrehel/make-interfaces-feel-better";
       flake = false;
     };
+
+    # Linked from the store by home/skills.nix and home/agents.nix. Bump with
+    # `nix flake update impeccable`.
+    impeccable = {
+      url = "github:pbakaus/impeccable";
+      flake = false;
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, mattpocock-skills, vercel-agent-skills, components-build, ui-sdk, anthropic-skills, hallmark, gridlines, make-interfaces-feel-better, ... }:
+  outputs = { self, nixpkgs, home-manager, mattpocock-skills, vercel-agent-skills, components-build, ui-sdk, anthropic-skills, hallmark, gridlines, make-interfaces-feel-better, impeccable, ... }:
     let
       supportedSystems = [ "aarch64-darwin" ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
@@ -93,7 +100,7 @@
       # module. The host sets the username and home directory.
       homeModules.default = {
         imports = [ ./home ];
-        _module.args = { inherit mattpocock-skills vercel-agent-skills components-build ui-sdk anthropic-skills hallmark gridlines make-interfaces-feel-better; };
+        _module.args = { inherit mattpocock-skills vercel-agent-skills components-build ui-sdk anthropic-skills hallmark gridlines make-interfaces-feel-better impeccable; };
       };
 
       # The home-manager CLI from this lockfile, so applying the config can't

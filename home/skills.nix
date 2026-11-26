@@ -1,4 +1,4 @@
-{ config, lib, mattpocock-skills, vercel-agent-skills, components-build, ui-sdk, anthropic-skills, hallmark, gridlines, make-interfaces-feel-better, ... }:
+{ config, lib, mattpocock-skills, vercel-agent-skills, components-build, ui-sdk, anthropic-skills, hallmark, gridlines, make-interfaces-feel-better, impeccable, ... }:
 
 let
   repo = "${config.home.homeDirectory}/development/dotfiles";
@@ -50,7 +50,11 @@ in
       ".claude/skills/${name}".source = source;
       ".agents/skills/${name}".source = source;
     })
-    skills;
+    skills // {
+    # Upstream builds one variant per harness, so each directory gets its own.
+    ".claude/skills/impeccable".source = "${impeccable}/.claude/skills/impeccable";
+    ".agents/skills/impeccable".source = "${impeccable}/.agents/skills/impeccable";
+  };
 
   # Migration from the old link scripts. Their symlinks sit where home-manager
   # now puts its own, and `-b hm-bak` would keep them as duplicate
