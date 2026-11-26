@@ -65,7 +65,7 @@ Every claim a PR makes ships with proof that the change does what it says. A vis
 
 ### T9 Shape names
 
-Every hand-written fixture, constant, test, and comment is named after the shape under test, even when a live probe supplied the shape. Real identifiers stay in the ticket or probe notes.
+Every hand-written fixture, constant, test, and comment is named after the shape under test, even when a live probe supplied the shape.
 
-- **Check:** scan added fixtures, constants, test names, and comments for a real customer, person, id, or code. Each one is a finding. The fix renames it after the shape it exercises and swaps the value for a placeholder.
+- **Check:** scan added fixtures, constants, test names, and comments for a real customer, person, id, or code. Each one is a finding, fixed with the shape name or a placeholder.
 - **Depth:** [name-the-shape](../principle-name-the-shape/SKILL.md).
