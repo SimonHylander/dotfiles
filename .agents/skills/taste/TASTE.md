@@ -62,3 +62,10 @@ The change is the smallest one that solves the stated problem. It carries no abs
 Every claim a PR makes ships with proof that the change does what it says. A visible change ships with a screenshot or video of the result, since visual proof builds the most confidence to merge.
 
 - **Check:** for each claim in the PR description, find its proof: a test that goes _red_ without the change, command output, a log, or a screenshot or video. A claim with no proof is a finding. A visible change with no screenshot or video is a finding.
+
+### T9 Shape names
+
+Every hand-written fixture, constant, test, and comment is named after the shape under test, even when a live probe supplied the shape. Real identifiers stay in the ticket or probe notes.
+
+- **Check:** scan added fixtures, constants, test names, and comments for a real customer, person, id, or code. Each one is a finding. The fix renames it after the shape it exercises and swaps the value for a placeholder.
+- **Depth:** [name-the-shape](../principle-name-the-shape/SKILL.md).
