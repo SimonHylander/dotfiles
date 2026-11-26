@@ -72,8 +72,8 @@ never a whole directory:
 ~/.claude/settings.json      -> <repo>/.claude/settings.json
 ~/.agents/AGENTS.md          -> <repo>/AGENTS.md
 ~/.codex/AGENTS.md           -> <repo>/AGENTS.md
-~/.claude/agents             -> <repo>/.agents/agents
-~/.agents/agents             -> <repo>/.agents/agents
+~/.claude/agents/<agent>     -> <repo>/.agents/agents/<agent>  or  <store>/impeccable/...
+~/.agents/agents/<agent>     -> <repo>/.agents/agents/<agent>
 ~/.cursor/rules/pstack-models.mdc -> <repo>/.agents/pstack-models.mdc
 ~/.claude/skills/<skill>     -> <repo>/.agents/skills/<skill>  or  <store>/mattpocock-skills/...
 ~/.agents/skills/<skill>     -> <repo>/.agents/skills/<skill>  or  <store>/mattpocock-skills/...
@@ -110,6 +110,10 @@ are untouched.
 - **[jakubkrehel/make-interfaces-feel-better](https://github.com/jakubkrehel/make-interfaces-feel-better)**
   is a flake input linked the same way as `make-interfaces-feel-better`. Update with
   `nix flake update make-interfaces-feel-better`.
+- **[pbakaus/impeccable](https://github.com/pbakaus/impeccable)** is a flake input. Upstream builds
+  one variant per harness, so `~/.claude/skills/impeccable` and `~/.agents/skills/impeccable` link
+  different directories, and its Claude subagents are linked into `~/.claude/agents`. Update with
+  `nix flake update impeccable`.
 
 This repo wins name collisions. home-manager removes links to skills that no longer exist on
 the next switch.
