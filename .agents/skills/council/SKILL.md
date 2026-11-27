@@ -30,6 +30,21 @@ For a code review, ask each delegate for a score out of 10.
 Count each full review pass as one round.
 A fresh review after fixes starts a new round.
 
+A fresh round's scores are evidence about the code alone. Each round, start
+new delegates on the same models, so a round 2 delegate has no memory of
+round 1. In a code review, the context each delegate gets is:
+
+- The code itself: read access to the checkout, or the full diff when the
+  checkout is out of reach. Excerpts and summaries you wrote do not replace
+  it.
+- From round 2 on, the previous round's findings, word for word, as items to
+  recheck against the code.
+
+The delegate decides from the code whether each finding is resolved, so your
+account of the fixes stays with you. So does any target score or pass
+threshold, including one the user's request names: compare the scores against
+it yourself.
+
 If the work ends in a pull request, put the results in the PR description.
 Put this section before the model and harness line at the end:
 
@@ -50,8 +65,8 @@ If the PR is open, edit the description. Do not post a comment for this.
 If there is no PR, put the same results in the final reply only.
 
 If you agree with their recommendations, make the changes and request a fresh
-review after. Continue this process until all delegates are satisfied with the
-outcome.
+review after. Continue this process until every delegate in the latest round
+is satisfied with the outcome.
 
 Do not let repeated reviews result in scope creep. It is your job to fight to
 keep scope limited.
